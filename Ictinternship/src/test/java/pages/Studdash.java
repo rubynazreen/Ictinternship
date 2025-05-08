@@ -8,6 +8,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -23,22 +24,6 @@ public  Studdash(WebDriver driver) {
 	this.wait=new WebDriverWait(driver,Duration.ofSeconds(20));
 }
  
-//String email,index;
-//public void projectsel() {
-	//WebElement prjsl=driver.findElement(By.xpath("(//button[text()='Read more'])[1]"));
-	//prjsl.click();
-//}
-
-/*public void projectsel(int index) {
-	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-	 wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'card')]")));
-String xpath = "(//button[text()='Read more'])[" + (index + 1) + "]";
-
-
-WebElement readMoreButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-readMoreButton.click();
-System.out.println("Clicked on Read more button for project index: " + index); 
-}*/
 public void projectsel(int index,String email) throws InterruptedException {
 	Thread.sleep(500);
 	 List<WebElement> button = driver.findElements(By.xpath("//button[text()='Read more']"));
@@ -58,27 +43,14 @@ public void projectsel(int index,String email) throws InterruptedException {
 
 	    wait.until(ExpectedConditions.elementToBeClickable(btn)).click();
 	    System.out.println("Clicked on project: '" + projectTitle + "' for user: " + email);
-
-	    // Click on the "Read more" button
-	    
-	}
-	    //Random rand = new Random();
-	   // int index = rand.nextInt(count); // Select randomly based on count
-
-	   // WebElement button = readMoreButtons.get(index);
-	    //wait.until(ExpectedConditions.elementToBeClickable(button)).click();
-	  //  System.out.println("Clicked on project index: " + index + " for user: " + email);
-    
-    
-
-
-
+}
+	  
 public void Checkbox() throws InterruptedException {
 	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	WebElement ckh=wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@name='acceptTerms' and @type='checkbox']")));
 	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", ckh);
 	
-	Thread.sleep(500); // Give time to scroll
+	Thread.sleep(500); 
 	((JavascriptExecutor) driver).executeScript("arguments[0].click();", ckh); 
 }
 public void proceedbutton() {
@@ -88,27 +60,66 @@ public void proceedbutton() {
 	//String actualTitle=driver.getTitle();
 	//Assert.assertEquals(actualTitle,"ICTAK Internship");
 }
+public void refmet() {
+    By locator = By.xpath("//*[@id='v-pills-reference-tab']");
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-public void Logoutpage() throws InterruptedException {
-    try {
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
-        Thread.sleep(500);
+    // Locate and scroll
+    WebElement refnav = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    ((JavascriptExecutor) driver).executeScript(
+        "arguments[0].scrollIntoView(true); window.scrollBy(0, -100);", refnav);
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement logoutBtn = wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//nav//button[text()='Logout']")));
+    // Re-locate and click
+    refnav = wait.until(ExpectedConditions.elementToBeClickable(locator));
+    refnav.click();
+}
 
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", logoutBtn);
-        System.out.println("Logout clicked.");
+public void getref() {
+	WebElement getref=wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Get Reference']")));
+	 ((JavascriptExecutor) driver).executeScript(
+		        "arguments[0].scrollIntoView(true); window.scrollBy(0, -100);", getref);
 
-        wait.until(ExpectedConditions.urlContains("login"));
-    } catch (Exception e) {
-        System.out.println("Logout failed: " + e.getMessage());
+		    // Click it after ensuring it’s clickable
+		    wait.until(ExpectedConditions.elementToBeClickable(getref)).click();
+}
+		
+public void weeksub()
+{
+	WebElement weekn=driver.findElement(By.xpath("//*[@id=\"v-pills-weekly-tab\"]"));
+	weekn.click();
+
+}
+public void  discussforum() {
+	WebElement discfor=driver.findElement(By.xpath("//*[@id=\"v-pills-discussion-tab\"]"));
+	discfor.click();
+}
+public void mygrade() {
+	WebElement myg=driver.findElement(By.xpath("//*[@id=\"v-pills-grades-tab\"]"));
+	myg.click();
+}
+public void clickFinalProjectTab() {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    By xpath = By.xpath("//button[@id='v-pills-final-tab']");
+
+    for (int attempt = 0; attempt < 2; attempt++) {
+        try {
+            WebElement tab = wait.until(ExpectedConditions.presenceOfElementLocated(xpath));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true); window.scrollBy(0, -100);", tab);
+            tab = wait.until(ExpectedConditions.elementToBeClickable(xpath));
+            tab.click();
+            break;
+        } catch (StaleElementReferenceException e) {
+            System.out.println("Retrying due to stale element...");
+        }
     }
+}
+public void vivavoice() {
+	WebElement viv=driver.findElement(By.xpath("//*[@id=\"v-pills-viva-tab\"]"));
+	viv.click();
+}//*[@id="v-pills-viva-tab"]
 
-}}
 
-
+}
    
 
 
