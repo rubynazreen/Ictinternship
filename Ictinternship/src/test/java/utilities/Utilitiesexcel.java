@@ -34,10 +34,27 @@ public static String Excelread(String filepath,int sheetIndex,int rowIndex,int c
     fls.close();
 
     return value; 
-	
+}
+    public static int getRowCount(String filepath, int sheetIndex) throws IOException {
+        fls = new FileInputStream(filepath);
+        wkb = new XSSFWorkbook(fls);
+        sht = wkb.getSheetAt(sheetIndex);
+        int rowCount = 0;
+        for (int i = 0; i < sht.getPhysicalNumberOfRows(); i++) {
+            XSSFRow row = sht.getRow(i);
+            if (row != null && row.getCell(0) != null && !row.getCell(0).toString().trim().isEmpty()) {
+                rowCount++;
+            }
+        }
+        wkb.close();
+        fls.close();
+        return rowCount;
+    } 
+    
+
 }
 
 
 
 
-}
+

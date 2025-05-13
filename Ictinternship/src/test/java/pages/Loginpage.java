@@ -24,40 +24,42 @@ public void login() {
 	lgn.click();
 }
 public void SetEmail(String Email) {
-	
-//	WebDriverWait wait= new WebDriverWait(driver,Duration.ofSeconds(10));
-	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='email']")));	
 WebElement eml=driver.findElement(By.xpath("//input[@type='email']"));
 eml.clear();
 eml.sendKeys(Email);
 }
+
 public void SetPassword(String Password) {
-	
-	//WebDriverWait wait= new WebDriverWait(driver,Duration.ofSeconds(10));
-	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='password']")));
-	WebElement pass=driver.findElement(By.xpath("//input[@type='password']"));
-	pass.clear();
+WebElement pass=driver.findElement(By.xpath("//input[@type='password']"));
+pass.clear();
 pass.sendKeys(Password);
 }
+
 public void btnClick() {
-	WebElement btn=driver.findElement(By.xpath("//button[@type='submit']"));
-	btn.click();}
+WebElement btn=driver.findElement(By.xpath("//button[@type='submit']"));
+btn.click();}
 
 public String getproduct()
-
 {
 	WebElement dashboard=driver.findElement(By.xpath("//*[text()='The Student Dashboard']"));
 	String prdt= dashboard.getText();
-	System.out.println("Login is successful: Project is visible");
+	System.out.println("Reached in Studentdashboard");
 return prdt;
 }
-
 
 public void Logout()
 {
 	WebElement lgt=driver.findElement(By.xpath("//button[text()='Logout']"));
 	lgt.click();
+}
 
+public String getproductlogin()
+{
+	WebElement productlog=driver.findElement(By.xpath("//h2[text()='Login']"));
+	String prd=productlog.getText();
+	System.out.println("Reached Login");
+return prd;
 }
 
 }
+

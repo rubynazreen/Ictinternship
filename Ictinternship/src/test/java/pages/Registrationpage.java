@@ -2,6 +2,7 @@ package pages;
 
 import java.time.Duration;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -19,14 +20,10 @@ public Registrationpage(WebDriver driver) {
 }
 public void Register() throws InterruptedException
 {
-	
 	WebElement rgst ;
-	
-	
 	 rgst=driver.findElement(By.linkText("New User? Register"));
 	rgst.click();
-	
-}
+	}
 
 public void Name(String name)
 {
@@ -56,6 +53,14 @@ public void Checkbox() {
 public void Continue() {
 	WebElement cnt=driver.findElement(By.xpath("//button[@type='submit']"));
 	cnt.click();
+	
+}
+public String getproductreg()
+{
+	WebElement productreg=driver.findElement(By.xpath("//h2[text()='Student Signup']"));
+	String prd=productreg.getText();
+	System.out.println("Reached RegistrationPage");
+return prd;
 }
 
 }
